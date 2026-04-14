@@ -1,795 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Lesson: Conditional Statements & Loops</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Conditionals: if / else / elif / nested | Exercises + Solutions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-            line-height: 1.6;
-        }
+    body {
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      font-family: 'Segoe UI', 'Fira Code', 'Cascadia Code', monospace;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
 
-        /* Navigation Bar */
-        .nav-bar {
-            position: sticky;
-            top: 0;
-            background: #0f3460;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+    /* main container */
+    .python-card {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #fefefe;
+      border-radius: 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
 
-        .nav-bar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 25px;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
+    /* header with python theme */
+    .header {
+      background: #306998;
+      background: linear-gradient(135deg, #1e415e, #306998);
+      padding: 1.8rem 2rem;
+      color: white;
+      border-bottom: 5px solid #ffd43b;
+    }
 
-        .nav-bar a:hover {
-            background: #e94560;
-            transform: translateY(-2px);
-        }
+    .header h1 {
+      font-size: 2rem;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-        /* Slide Container */
-        .slide-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+    .header h1 span {
+      background: #ffd43b;
+      color: #1e2a3a;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
 
-        /* Individual Slide */
-        .slide {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+    .header p {
+      margin-top: 0.6rem;
+      opacity: 0.9;
+      font-family: monospace;
+    }
 
-        .slide h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-            color: #e94560;
-            border-left: 5px solid #e94560;
-            padding-left: 20px;
-        }
+    /* tabs navigation */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      background: #f4f7fb;
+      border-bottom: 2px solid #cfdfed;
+      padding: 0 1.2rem;
+      gap: 0.3rem;
+    }
 
-        .slide h2 {
-            font-size: 32px;
-            margin: 25px 0 15px 0;
-            color: #0f3460;
-            background: #eee;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 10px;
-        }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 1rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #1e4663;
+      border-radius: 28px 28px 0 0;
+      letter-spacing: -0.2px;
+    }
 
-        .slide h3 {
-            font-size: 24px;
-            margin: 20px 0 10px 0;
-            color: #e94560;
-        }
+    .tab-btn:hover {
+      background: #e2edf7;
+      color: #0a2b3e;
+    }
 
-        .slide p {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
+    .tab-btn.active {
+      background: white;
+      color: #306998;
+      border-bottom: 3px solid #ffd43b;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+    }
 
-        /* Code Block */
-        .code-block {
-            background: #1e1e2e;
-            border-left: 5px solid #e94560;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            color: #98f5e1;
-        }
+    /* panels */
+    .tab-panel {
+      display: none;
+      padding: 2rem 2rem 2rem 2rem;
+      animation: fadeIn 0.25s ease;
+    }
 
-        .code-block pre {
-            margin: 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
+    .tab-panel.active-panel {
+      display: block;
+    }
 
-        /* Output Block */
-        .output {
-            background: #2a2a3e;
-            border-left: 5px solid #00ffaa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            color: #00ffaa;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
 
-        /* Grid for Examples */
-        .example-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
+    /* two column layout (exercise + solution) */
+    .dual-column {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
 
-        .example-card {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+    .exercise-col, .solution-col {
+      flex: 1 1 45%;
+      background: #ffffff;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: 0.2s;
+      border: 1px solid #e9edf2;
+    }
 
-        .example-card h4 {
-            color: #e94560;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
+    .section-header {
+      padding: 1rem 1.5rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
 
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
+    .exercise-header {
+      background: #fff5e6;
+      color: #b45309;
+      border-left: 6px solid #f59e0b;
+    }
 
-        .comparison-table th, .comparison-table td {
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 12px;
-            text-align: left;
-        }
+    .solution-header {
+      background: #e6f7ec;
+      color: #2b6e3c;
+      border-left: 6px solid #10b981;
+    }
 
-        .comparison-table th {
-            background: #e94560;
-            color: white;
-        }
+    .card-body {
+      padding: 1.5rem;
+    }
 
-        .comparison-table td {
-            background: rgba(255,255,255,0.05);
-        }
+    .question-box {
+      background: #fef9e3;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid #fbbf24;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
 
-        /* Exercise Section */
-        .exercise {
-            background: #0f3460;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
 
-        .exercise h3 {
-            color: #ffaa00;
-        }
+    .solution-col pre {
+      background: #1e293b;
+    }
 
-        /* Buttons */
-        .next-btn {
-            display: inline-block;
-            background: #e94560;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
+    .demo-runner {
+      background: #f1f5f9;
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      margin-top: 1rem;
+      border: 1px solid #cbd5e1;
+    }
 
-        .next-btn:hover {
-            background: #ff6b6b;
-            transform: translateX(5px);
-        }
+    .run-python-btn {
+      background: #306998;
+      border: none;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-family: monospace;
+      cursor: pointer;
+      transition: 0.1s;
+      margin-top: 8px;
+    }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 30px;
-            background: #0f3460;
-            margin-top: 40px;
-        }
+    .run-python-btn:hover {
+      background: #1e4a6e;
+      transform: scale(0.97);
+    }
 
-        @media (max-width: 768px) {
-            .slide {
-                padding: 25px;
-            }
-            .slide h1 {
-                font-size: 32px;
-            }
-            .code-block {
-                font-size: 14px;
-            }
-        }
-    </style>
+    .output-area {
+      margin-top: 12px;
+      background: #0f172a;
+      color: #bbf0d0;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+    }
+
+    hr {
+      margin: 1rem 0;
+    }
+
+    footer {
+      background: #eef2f8;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #1e4663;
+      border-top: 1px solid #cbd5e1;
+      font-family: monospace;
+    }
+
+    @media (max-width: 800px) {
+      .dual-column { flex-direction: column; }
+      .tab-btn { padding: 0.7rem 1.2rem; font-size: 0.8rem; }
+      .header h1 { font-size: 1.4rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="nav-bar">
-        <a href="#slide1">If Statement</a>
-        <a href="#slide2">If-Else</a>
-        <a href="#slide3">Elif</a>
-        <a href="#slide4">Nested If</a>
-        <a href="#slide5">For Loop</a>
-        <a href="#slide6">While Loop</a>
-        <a href="#slide7">Loop Control</a>
-        <a href="#slide8">Exercises</a>
-    </nav>
+<div class="python-card">
+  <div class="header">
+    <h1>
+      🐍 Python Conditionals 
+      <span>if · else · elif · nested</span>
+    </h1>
+    <p>📚 Real exercises + Python solutions | run code live & understand logic</p>
+  </div>
 
-    <div class="slide-container">
+  <div class="tabs-bar">
+    <button class="tab-btn active" data-tab="tab-if">🔹 if statement</button>
+    <button class="tab-btn" data-tab="tab-ifelse">🔸 if-else</button>
+    <button class="tab-btn" data-tab="tab-elif">🔹 if-elif-else</button>
+    <button class="tab-btn" data-tab="tab-nested">🪺 nested if</button>
+  </div>
 
-        <!-- TITLE SLIDE -->
-        <div class="slide" id="slide1">
-            <h1>Python Conditional Statements & Loops</h1>
-            <p>Saint Joseph Coding club - Introduction to Python</p>
-            <p> Making Decisions and Repeating Actions</p>
-            <div class="code-block">
-                <pre># Topics covered today:
-1. if statement
-2. if-else statement  
-3. elif statement
-4. Nested if statements
-5. for loop
-6. while loop
-7. break and continue</pre>
-            </div>
+  <!-- ====================== TAB 1: SIMPLE IF ====================== -->
+  <div id="tab-if" class="tab-panel active-panel">
+    <div class="dual-column">
+      <!-- EXERCISE COLUMN -->
+      <div class="exercise-col">
+        <div class="section-header exercise-header">📌 Exercise 1 · simple if</div>
+        <div class="card-body">
+          <div class="question-box">
+            🧪 <strong>Task:</strong> Write a Python program that checks if a number is positive.<br>
+            Given <code>temperature = 5</code>, if temperature is greater than 0, print <code>"❄️ Above freezing point"</code>.<br>
+            <em>(only if block, no else)</em>
+          </div>
+          <pre># starter code
+temperature = 5
+if temperature > 0:
+    print("Above freezing point")</pre>
+          <div class="demo-runner">
+            <button class="run-python-btn" onclick="runIfDemo()">▶ Run Python (if demo)</button>
+            <div id="ifOutput" class="output-area">✨ Click to see output</div>
+          </div>
         </div>
+      </div>
+      <!-- SOLUTION COLUMN -->
+      <div class="solution-col">
+        <div class="section-header solution-header">💡 Solution · if statement</div>
+        <div class="card-body">
+          <pre># Python solution
+temperature = 5
+if temperature > 0:
+    print("✅ Above freezing point")
+# Output: ✅ Above freezing point</pre>
+          <div class="demo-runner">
+            📖 <strong>Explanation:</strong> Condition <code>5 > 0</code> is True, so the indented block runs.<br>
+            In Python, indentation is mandatory.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- SLIDE 2: IF STATEMENT -->
-        <div class="slide" id="slide2">
-            <h1>1. The if Statement</h1>
-            <p>The <strong>if statement</strong> checks a condition. If the condition is True, the code inside runs.</p>
-            
-            <div class="code-block">
-                <pre># Syntax
-if condition:
-    # code to execute if condition is True</pre>
-            </div>
-
-            <h3>Example 1: Check if a number is positive</h3>
-            <div class="code-block">
-                <pre>num = 10
-if num > 0:
-    print("The number is positive")</pre>
-            </div>
-            <div class="output">
-                Output: The number is positive
-            </div>
-
-            <h3>Example 2: Check age for voting</h3>
-            <div class="code-block">
-                <pre>age = 18
+  <!-- ====================== TAB 2: IF-ELSE ====================== -->
+  <div id="tab-ifelse" class="tab-panel">
+    <div class="dual-column">
+      <div class="exercise-col">
+        <div class="section-header exercise-header">🔄 Exercise 2 · if-else</div>
+        <div class="card-body">
+          <div class="question-box">
+            🎫 <strong>Task:</strong> Check voting eligibility.<br>
+            Create variable <code>age = 16</code>. If age >= 18, print <code>"🗳️ Eligible to vote"</code>, otherwise print <code>"📵 Not eligible"</code>.
+          </div>
+          <pre>age = 16
 if age >= 18:
-    print("You are eligible to vote")</pre>
-            </div>
-            <div class="output">
-                Output: You are eligible to vote
-            </div>
-
-            <div class="exercise">
-                <h3>Try it yourself:</h3>
-                <p>Write an if statement that checks if a student's score is greater than 50 and prints "You passed".</p>
-            </div>
-            <a href="#slide3" class="next-btn">Next: If-Else →</a>
+    print("Eligible to vote")
+else:
+    print("Not eligible")</pre>
+          <div class="demo-runner">
+            <button class="run-python-btn" onclick="runIfElseDemo()">▶ Run if-else (age=16)</button>
+            <div id="ifelseOutput" class="output-area">⚡ Press to test</div>
+          </div>
         </div>
-
-        <!-- SLIDE 3: IF-ELSE STATEMENT -->
-        <div class="slide" id="slide3">
-            <h1>2. The if-else Statement</h1>
-            <p><strong>if-else</strong> allows you to run one block of code if the condition is True, and another block if it is False.</p>
-            
-            <div class="code-block">
-                <pre># Syntax
-if condition:
-    # code if True
+      </div>
+      <div class="solution-col">
+        <div class="section-header solution-header">🧩 Solution · if-else logic</div>
+        <div class="card-body">
+          <pre>age = 16
+if age >= 18:
+    print("Eligible to vote")
 else:
-    # code if False</pre>
-            </div>
-
-            <div class="example-grid">
-                <div class="example-card">
-                    <h4>Example 1: Even or Odd</h4>
-                    <div class="code-block">
-                        <pre>num = 7
-if num % 2 == 0:
-    print("Even")
-else:
-    print("Odd")</pre>
-                    </div>
-                    <div class="output">Output: Odd</div>
-                </div>
-
-                <div class="example-card">
-                    <h4>Example 2: Pass or Fail</h4>
-                    <div class="code-block">
-                        <pre>score = 45
-if score >= 50:
-    print("Pass")
-else:
-    print("Fail")</pre>
-                    </div>
-                    <div class="output">Output: Fail</div>
-                </div>
-            </div>
-
-            <h3>Example 3: Real Life - Discount Eligibility</h3>
-            <div class="code-block">
-                <pre>purchase = 500
-if purchase >= 1000:
-    discount = purchase * 0.1
-    print(f"Discount: {discount}")
-else:
-    print("No discount. Spend 1000+ to get 10% off")</pre>
-            </div>
-            <div class="output">
-                Output: No discount. Spend 1000+ to get 10% off
-            </div>
-            <a href="#slide4" class="next-btn">Next: Elif →</a>
+    print("Not eligible")   # ✅ Output: Not eligible</pre>
+          <div class="demo-runner">
+            💡 <strong>Why?</strong> 16 is not >= 18 → else block executes.<br>
+            Try changing age to 20 and see different output.
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- SLIDE 4: ELIF STATEMENT -->
-        <div class="slide" id="slide4">
-            <h1>3. The elif Statement</h1>
-            <p><strong>elif</strong> (else if) allows you to check multiple conditions in sequence.</p>
-            
-            <div class="code-block">
-                <pre># Syntax
-if condition1:
-    # code
-elif condition2:
-    # code
-elif condition3:
-    # code
-else:
-    # code if none are True</pre>
-            </div>
-
-            <div class="example-grid">
-                <div class="example-card">
-                    <h4>Example 1: Grade Calculator</h4>
-                    <div class="code-block">
-                        <pre>score = 85
+  <!-- ====================== TAB 3: IF-ELIF-ELSE ====================== -->
+  <div id="tab-elif" class="tab-panel">
+    <div class="dual-column">
+      <div class="exercise-col">
+        <div class="section-header exercise-header">📊 Exercise 3 · if-elif-else</div>
+        <div class="card-body">
+          <div class="question-box">
+            🎓 <strong>Task:</strong> Grade classifier.<br>
+            Given <code>score = 85</code>, assign grade letter:<br>
+            A (>=90), B (>=75), C (>=60), F (otherwise).<br>
+            Print the final grade.
+          </div>
+          <pre>score = 85
 if score >= 90:
     grade = "A"
-elif score >= 80:
+elif score >= 75:
     grade = "B"
-elif score >= 70:
-    grade = "C"
 elif score >= 60:
-    grade = "D"
+    grade = "C"
 else:
     grade = "F"
 print(f"Grade: {grade}")</pre>
-                    </div>
-                    <div class="output">Output: Grade: B</div>
-                </div>
-
-                <div class="example-card">
-                    <h4>Example 2: Traffic Light</h4>
-                    <div class="code-block">
-                        <pre>light = "yellow"
-if light == "red":
-    print("Stop")
-elif light == "yellow":
-    print("Slow down")
-elif light == "green":
-    print("Go")
+          <div class="demo-runner">
+            <button class="run-python-btn" onclick="runElifDemo()">🎓 Run grade (score=85)</button>
+            <div id="elifOutput" class="output-area">📖 Click to compute</div>
+          </div>
+        </div>
+      </div>
+      <div class="solution-col">
+        <div class="section-header solution-header">🏆 Solution · elif chain</div>
+        <div class="card-body">
+          <pre>score = 85
+if score >= 90:
+    grade = "A"
+elif score >= 75:   # ✅ True (85 >= 75)
+    grade = "B"
+elif score >= 60:
+    grade = "C"
 else:
-    print("Invalid color")</pre>
-                    </div>
-                    <div class="output">Output: Slow down</div>
-                </div>
-            </div>
-
-            <h3>Example 3: Ethiopian Coffee Strength</h3>
-            <div class="code-block">
-                <pre>strength = 3
-if strength == 1:
-    print("Light roast - mild flavor")
-elif strength == 2:
-    print("Medium roast - balanced")
-elif strength == 3:
-    print("Dark roast - strong and bold")
-else:
-    print("Unknown strength level")</pre>
-            </div>
-            <div class="output">
-                Output: Dark roast - strong and bold
-            </div>
-            <a href="#slide5" class="next-btn">Next: Nested If →</a>
+    grade = "F"
+print(f"Grade: {grade}")   # Output: Grade: B</pre>
+          <div class="demo-runner">
+            🔎 <strong>Explanation:</strong> elif checks in order; first true block executes.<br>
+            Score 85 meets <code>score >= 75</code> → grade "B".
+          </div>
         </div>
-
-        <!-- SLIDE 5: NESTED IF -->
-        <div class="slide" id="slide5">
-            <h1>4. Nested if Statements</h1>
-            <p>You can put an <strong>if statement inside another if statement</strong>. This is called nesting.</p>
-
-            <div class="code-block">
-                <pre># Syntax
-if condition1:
-    if condition2:
-        # code when both are True</pre>
-            </div>
-
-            <h3>Example: Checking Login Credentials</h3>
-            <div class="code-block">
-                <pre>username = "student"
-password = "python123"
-
-if username == "student":
-    print("Username correct")
-    if password == "python123":
-        print("Login successful")
-    else:
-        print("Wrong password")
-else:
-    print("Username not found")</pre>
-            </div>
-            <div class="output">
-                Output: 
-                Username correct
-                Login successful
-            </div>
-
-            <h3>Example: Ethiopian Bus Ticket System</h3>
-            <div class="code-block">
-                <pre>age = 25
-has_id = True
-
-if age >= 18:
-    print("Adult passenger")
-    if has_id:
-        print("Ticket issued")
-    else:
-        print("Please show your ID")
-else:
-    print("Child ticket (50% discount)")</pre>
-            </div>
-            <div class="output">
-                Output:
-                Adult passenger
-                Ticket issued
-            </div>
-            <a href="#slide6" class="next-btn">Next: For Loop →</a>
-        </div>
-
-        <!-- SLIDE 6: FOR LOOP -->
-        <div class="slide" id="slide6">
-            <h1>5. The for Loop</h1>
-            <p>The <strong>for loop</strong> is used to iterate over a sequence (like a list, string, or range).</p>
-
-            <div class="code-block">
-                <pre># Syntax
-for variable in sequence:
-    # code to repeat</pre>
-            </div>
-
-            <div class="example-grid">
-                <div class="example-card">
-                    <h4>Example 1: Print numbers 1-5</h4>
-                    <div class="code-block">
-                        <pre>for i in range(1, 6):
-    print(i)</pre>
-                    </div>
-                    <div class="output">1 2 3 4 5</div>
-                </div>
-
-                <div class="example-card">
-                    <h4>Example 2: Loop through a list</h4>
-                    <div class="code-block">
-                        <pre>names = ["Tsegaye", "Mulu", "Abdo"]
-for name in names:
-    print(f"Hello {name}")</pre>
-                    </div>
-                    <div class="output">Hello Tsegaye<br>Hello Mulu<br>Hello Abdo</div>
-                </div>
-            </div>
-
-            <h3>Example 3: Real Life - Daily Savings</h3>
-            <div class="code-block">
-                <pre>total = 0
-for day in range(1, 8):  # 7 days
-    total = total + 20
-    print(f"Day {day}: {total} Birr")</pre>
-            </div>
-            <div class="output">
-                Day 1: 20 Birr<br>
-                Day 2: 40 Birr<br>
-                Day 3: 60 Birr<br>
-                Day 4: 80 Birr<br>
-                Day 5: 100 Birr<br>
-                Day 6: 120 Birr<br>
-                Day 7: 140 Birr
-            </div>
-
-            <h3>The range() Function</h3>
-            <div class="comparison-table">
-                <tr>
-                    <th>Function</th>
-                    <th>Example</th>
-                    <th>Output</th>
-                </tr>
-                <tr>
-                    <td>range(stop)</td>
-                    <td>range(5)</td>
-                    <td>0,1,2,3,4</td>
-                </tr>
-                <tr>
-                    <td>range(start, stop)</td>
-                    <td>range(2,6)</td>
-                    <td>2,3,4,5</td>
-                </tr>
-                <tr>
-                    <td>range(start, stop, step)</td>
-                    <td>range(1,10,2)</td>
-                    <td>1,3,5,7,9</td>
-                </tr>
-            </div>
-            <a href="#slide7" class="next-btn">Next: While Loop →</a>
-        </div>
-
-        <!-- SLIDE 7: WHILE LOOP -->
-        <div class="slide" id="slide7">
-            <h1>6. The while Loop</h1>
-            <p>The <strong>while loop</strong> repeats as long as a condition is True.</p>
-
-            <div class="code-block">
-                <pre># Syntax
-while condition:
-    # code to repeat</pre>
-            </div>
-
-            <div class="example-grid">
-                <div class="example-card">
-                    <h4>Example 1: Count down</h4>
-                    <div class="code-block">
-                        <pre>count = 5
-while count > 0:
-    print(count)
-    count = count - 1</pre>
-                    </div>
-                    <div class="output">5 4 3 2 1</div>
-                </div>
-
-                <div class="example-card">
-                    <h4>Example 2: Sum until 10</h4>
-                    <div class="code-block">
-                        <pre>total = 0
-num = 1
-while total < 10:
-    total = total + num
-    num = num + 1
-print(f"Total: {total}")</pre>
-                    </div>
-                    <div class="output">Total: 10</div>
-                </div>
-            </div>
-
-            <h3>Example 3: Real Life - ATM Pin Attempts</h3>
-            <div class="code-block">
-                <pre>correct_pin = "1234"
-attempts = 3
-
-while attempts > 0:
-    pin = input("Enter PIN: ")
-    if pin == correct_pin:
-        print("Access granted")
-        break
-    else:
-        attempts = attempts - 1
-        print(f"Wrong. {attempts} attempts left")</pre>
-            </div>
-
-            <h3>for vs while - When to use?</h3>
-            <div class="comparison-table">
-                <tr>
-                    <th>for loop</th>
-                    <th>while loop</th>
-                </tr>
-                <tr>
-                    <td>Use when you KNOW how many times to loop</td>
-                    <td>Use when you DON'T KNOW how many times</td>
-                </tr>
-                <tr>
-                    <td>Looping through arrays, ranges, strings</td>
-                    <td>User input, waiting for a condition to change</td>
-                </tr>
-                <tr>
-                    <td>Example: Print 1 to 100</td>
-                    <td>Example: Keep asking until correct password</td>
-                </tr>
-            </div>
-            <a href="#slide8" class="next-btn">Next: Loop Control →</a>
-        </div>
-
-        <!-- SLIDE 8: BREAK AND CONTINUE -->
-        <div class="slide" id="slide8">
-            <h1>7. break and continue</h1>
-            <p>Control the flow of your loops with <strong>break</strong> and <strong>continue</strong>.</p>
-
-            <div class="example-grid">
-                <div class="example-card">
-                    <h4>break - Stop the loop</h4>
-                    <div class="code-block">
-                        <pre>for i in range(1, 10):
-    if i == 5:
-        break
-    print(i)</pre>
-                    </div>
-                    <div class="output">1 2 3 4</div>
-                </div>
-
-                <div class="example-card">
-                    <h4>continue - Skip to next iteration</h4>
-                    <div class="code-block">
-                        <pre>for i in range(1, 6):
-    if i == 3:
-        continue
-    print(i)</pre>
-                    </div>
-                    <div class="output">1 2 4 5</div>
-                </div>
-            </div>
-
-            <h3>Real Life Example: Skip weekends, stop after Friday</h3>
-            <div class="code-block">
-                <pre>days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-for day in days:
-    if day == "Sat":
-        continue  # Skip Saturday
-    if day == "Sun":
-        continue  # Skip Sunday
-    if day == "Fri":
-        print("Friday - Last work day!")
-        break
-    print(f"{day} - Working")</pre>
-            </div>
-            <div class="output">
-                Mon - Working<br>
-                Tue - Working<br>
-                Wed - Working<br>
-                Thu - Working<br>
-                Friday - Last work day!
-            </div>
-            <a href="#slide9" class="next-btn">Next: Exercises →</a>
-        </div>
-
-        <!-- SLIDE 9: EXERCISES -->
-        <div class="slide" id="slide9">
-            <h1>8. Practice Exercises</h1>
-            
-            <div class="exercise">
-                <h3>Exercise 1 (if-elif-else)</h3>
-                <p>Write a program that asks for a student's score (0-100) and prints:</p>
-                <ul style="margin-left: 20px; margin-bottom: 10px;">
-                    <li>90+ = "Excellent"</li>
-                    <li>80-89 = "Very Good"</li>
-                    <li>70-79 = "Good"</li>
-                    <li>60-69 = "Fair"</li>
-                    <li>Below 60 = "Needs Improvement"</li>
-                </ul>
-            </div>
-
-            <div class="exercise">
-                <h3>Exercise 2 (for loop)</h3>
-                <p>Use a for loop to print the multiplication table of 7 (from 1 to 12).</p>
-            </div>
-
-            <div class="exercise">
-                <h3>Exercise 3 (while loop)</h3>
-                <p>Write a program that keeps asking the user for a number until they enter 0. Then print the sum of all numbers entered.</p>
-            </div>
-
-            <div class="exercise">
-                <h3>Exercise 4 (nested if)</h3>
-                <p>Write a program that checks if a person can get a driver's license:</p>
-                <ul style="margin-left: 20px;">
-                    <li>Must be 18+ years old</li>
-                    <li>Must pass the written test (score >= 70)</li>
-                    <li>If both true, print "License approved"</li>
-                </ul>
-            </div>
-
-            <div class="exercise">
-                <h3>Exercise 5 (break/continue)</h3>
-                <p>Print numbers from 1 to 20, but skip multiples of 3. Stop completely if you reach 15.</p>
-            </div>
-
-            <div class="exercise">
-                <h3>Challenge: Ethiopian Grade Calculator</h3>
-                <p>Ask for 5 subject scores, calculate the average, then use if-elif to assign:</p>
-                <ul style="margin-left: 20px;">
-                    <li>90-100 = A</li>
-                    <li>80-89 = B</li>
-                    <li>70-79 = C</li>
-                    <li>60-69 = D</li>
-                    <li>Below 60 = F</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- SUMMARY SLIDE -->
-        <div class="slide" id="slide10">
-            <h1>Summary</h1>
-            
-            <div class="comparison-table">
-                <tr>
-                    <th>Concept</th>
-                    <th>Key Points</th>
-                </tr>
-                <tr>
-                    <td>if</td>
-                    <td>Checks one condition</td>
-                </tr>
-                <tr>
-                    <td>if-else</td>
-                    <td>One block for True, another for False</td>
-                </tr>
-                <tr>
-                    <td>elif</td>
-                    <td>Checks multiple conditions in order</td>
-                </tr>
-                <tr>
-                    <td>for loop</td>
-                    <td>Use when you know the number of iterations</td>
-                </tr>
-                <tr>
-                    <td>while loop</td>
-                    <td>Use when you don't know the number of iterations</td>
-                </tr>
-                <tr>
-                    <td>break</td>
-                    <td>Exits the loop immediately</td>
-                </tr>
-                <tr>
-                    <td>continue</td>
-                    <td>Skips to the next iteration</td>
-                </tr>
-            </div>
-
-            <div class="code-block">
-                <pre># Quick Reference
-if condition:
-    # code
-elif other_condition:
-    # code
-else:
-    # code
-
-for variable in sequence:
-    # code
-
-while condition:
-    # code</pre>
-            </div>
-
-            <div class="exercise">
-                <h3>Homework</h3>
-                <p>1. Complete all 5 exercises above</p>
-                <p>2. Create a simple number guessing game using a while loop</p>
-                <p>3. Write a program that prints all prime numbers between 1 and 50 using a for loop</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>Python Programming - Grade 12 | Conditional Statements & Loops</p>
-            <p>Practice every day to become a better programmer!</p>
-        </div>
-
+      </div>
     </div>
+  </div>
 
+  <!-- ====================== TAB 4: NESTED IF ====================== -->
+  <div id="tab-nested" class="tab-panel">
+    <div class="dual-column">
+      <div class="exercise-col">
+        <div class="section-header exercise-header">🪹 Exercise 4 · nested conditions</div>
+        <div class="card-body">
+          <div class="question-box">
+            🎟️ <strong>Task:</strong> Museum discount logic.<br>
+            is_member = True, purchase_amount = 120.<br>
+            Rules: If member, then check amount: >100 → "🎁 20% super discount", else "🎁 10% discount".<br>
+            If not member → "No discount".
+          </div>
+          <pre>is_member = True
+amount = 120
+if is_member:
+    if amount > 100:
+        discount = "20% super discount"
+    else:
+        discount = "10% discount"
+else:
+    discount = "No discount"
+print(f"Discount: {discount}")</pre>
+          <div class="demo-runner">
+            <button class="run-python-btn" onclick="runNestedDemo()">🎟️ Run nested discount</button>
+            <div id="nestedOutput" class="output-area">✨ Click to see result</div>
+          </div>
+        </div>
+      </div>
+      <div class="solution-col">
+        <div class="section-header solution-header">🧬 nested if solution</div>
+        <div class="card-body">
+          <pre>is_member = True
+amount = 120
+if is_member:
+    if amount > 100:
+        discount = "20% super discount"   # ✅ executes
+    else:
+        discount = "10% discount"
+else:
+    discount = "No discount"
+print(f"Discount: {discount}")   # Output: 20% super discount</pre>
+          <div class="demo-runner">
+            📘 <strong>Logic:</strong> outer if checks membership → inner if checks amount threshold.<br>
+            Nested conditions are perfect for multi-level decisions.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    🐍 Python 3 | Each tab includes a real exercise + solution + live Python simulator (JS emulation) <br>
+    ✅ Understand: if, if-else, elif ladder, nested if — all with practical tasks.
+  </footer>
+</div>
+
+<script>
+  // ---------- interactive demo functions (simulate Python behavior) ----------
+
+  // Tab 1: simple if
+  function runIfDemo() {
+    let temperature = 5;
+    let output = "";
+    if (temperature > 0) {
+      output = "✅ Above freezing point (temperature = 5 > 0)";
+    } else {
+      output = "❄️ Not above freezing";
+    }
+    document.getElementById("ifOutput").innerHTML = `🐍 Python output:<br>▶ ${output}`;
+  }
+
+  // Tab 2: if-else (age=16)
+  function runIfElseDemo() {
+    let age = 16;
+    let result = "";
+    if (age >= 18) {
+      result = "🗳️ Eligible to vote";
+    } else {
+      result = "📵 Not eligible";
+    }
+    document.getElementById("ifelseOutput").innerHTML = `🐍 Python output:<br>▶ ${result} (age = ${age})`;
+  }
+
+  // Tab 3: elif chain (score 85)
+  function runElifDemo() {
+    let score = 85;
+    let grade = "";
+    if (score >= 90) {
+      grade = "A";
+    } else if (score >= 75) {
+      grade = "B";
+    } else if (score >= 60) {
+      grade = "C";
+    } else {
+      grade = "F";
+    }
+    document.getElementById("elifOutput").innerHTML = `🐍 Python output:<br>▶ Grade: ${grade} (score = ${score}) → B because 85 >= 75`;
+  }
+
+  // Tab 4: nested if
+  function runNestedDemo() {
+    let isMember = true;
+    let amount = 120;
+    let discountMsg = "";
+    if (isMember) {
+      if (amount > 100) {
+        discountMsg = "🎁 20% super discount";
+      } else {
+        discountMsg = "🎁 10% discount";
+      }
+    } else {
+      discountMsg = "❌ No discount";
+    }
+    document.getElementById("nestedOutput").innerHTML = `🐍 Python output:<br>▶ Discount: ${discountMsg} (member: true, amount: $${amount})`;
+  }
+
+  // Additional optional: add live explanation to mimic real Python execution
+  // Also ensures smooth tab switching
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  function switchTab(tabId) {
+    panels.forEach(panel => {
+      panel.classList.remove('active-panel');
+    });
+    const activePanel = document.getElementById(tabId);
+    if (activePanel) activePanel.classList.add('active-panel');
+    
+    tabBtns.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('data-tab') === tabId) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const tabId = btn.getAttribute('data-tab');
+      switchTab(tabId);
+    });
+  });
+</script>
 </body>
 </html>
