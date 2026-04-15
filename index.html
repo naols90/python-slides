@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Python Calculator: Interactive Slide | Build a Simple Calculator</title>
+    <title>Simple Calculator in Python | Variables & If-Elif-Else Only</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
-            background: linear-gradient(145deg, #1a2639 0%, #2a3b4c 100%);
+            background: linear-gradient(135deg, #0b2b26 0%, #163832 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -21,23 +21,21 @@
             padding: 2rem;
         }
 
-        /* MAIN SLIDE CARD */
         .slide-card {
             max-width: 1300px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 3rem;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2);
             overflow: hidden;
             transition: all 0.2s ease;
         }
 
-        /* header area */
         .slide-header {
-            background: #0f172a;
+            background: #0f2c29;
             color: white;
             padding: 1.8rem 2.5rem;
-            border-bottom: 5px solid #f59e0b;
+            border-bottom: 5px solid #f4a261;
         }
 
         .slide-header h1 {
@@ -51,21 +49,20 @@
         }
 
         .slide-header h1 span {
-            background: #f59e0b;
+            background: #f4a261;
+            color: #0f2c29;
             padding: 0.2rem 1rem;
             border-radius: 60px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: normal;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .slide-header p {
             font-size: 1.1rem;
-            color: #cbd5e6;
+            color: #c9e9e4;
             margin-top: 0.6rem;
         }
 
-        /* two column layout */
         .two-columns {
             display: flex;
             flex-wrap: wrap;
@@ -78,17 +75,16 @@
         }
 
         .col:first-child {
-            background: #f8fafc;
-            border-right: 1px solid #e2e8f0;
+            background: #fefcf5;
+            border-right: 1px solid #e0d6c2;
         }
 
         .col:last-child {
             background: #ffffff;
         }
 
-        /* python code block styling - no emojis inside the code */
         .code-block {
-            background: #0e1e2a;
+            background: #1e2a2a;
             color: #e2e8f0;
             padding: 1.2rem;
             border-radius: 1.5rem;
@@ -110,44 +106,45 @@
             gap: 8px;
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
-            color: #0f172a;
+            color: #1e3a3a;
         }
 
         .badge-python {
-            background: #306998;
+            background: #2a9d8f;
             color: white;
             border-radius: 40px;
-            padding: 0.2rem 0.7rem;
+            padding: 0.2rem 0.8rem;
             font-size: 0.7rem;
             font-weight: 600;
         }
 
         .explanation {
-            background: #eef2ff;
+            background: #e9f5f2;
             padding: 1.2rem;
             border-radius: 1.2rem;
             margin: 1.2rem 0;
-            border-left: 5px solid #f59e0b;
+            border-left: 5px solid #f4a261;
         }
 
         .explanation p {
             margin: 0.5rem 0;
-            color: #1e293b;
+            color: #1e3a3a;
+            line-height: 1.4;
         }
 
-        /* interactive live demo panel (JS) */
         .demo-panel {
-            background: #f1f5f9;
+            background: #f8f9fa;
             border-radius: 1.8rem;
             padding: 1.3rem;
             margin-top: 1rem;
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
         }
 
         .demo-title {
             font-weight: 700;
             font-size: 1.4rem;
-            color: #0f172a;
+            color: #1e3a3a;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -164,14 +161,14 @@
             font-weight: 600;
             display: block;
             margin-bottom: 0.4rem;
-            color: #334155;
+            color: #2d6a4f;
         }
 
         .input-group input, .input-group select {
             width: 100%;
             padding: 0.8rem 1rem;
             font-size: 1rem;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #ced4da;
             border-radius: 1rem;
             background: white;
             font-family: monospace;
@@ -180,12 +177,12 @@
 
         .input-group input:focus, .input-group select:focus {
             outline: none;
-            border-color: #f59e0b;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            border-color: #f4a261;
+            box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.2);
         }
 
         .calc-btn {
-            background: #0f172a;
+            background: #2a9d8f;
             color: white;
             padding: 0.8rem 1.2rem;
             border: none;
@@ -200,26 +197,26 @@
         }
 
         .calc-btn:hover {
-            background: #f59e0b;
+            background: #f4a261;
             transform: scale(0.98);
-            color: #0f172a;
+            color: #1e3a3a;
         }
 
         .result-area {
-            background: #0f172a;
-            color: #facc15;
+            background: #1e3a3a;
+            color: #f4e285;
             padding: 1rem;
             border-radius: 1.2rem;
             text-align: center;
             font-family: monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             word-break: break-word;
         }
 
         .warning-note {
-            background: #fee2e2;
-            color: #991b1b;
+            background: #fff3e0;
+            color: #b45f2b;
             padding: 0.6rem;
             border-radius: 1rem;
             font-size: 0.8rem;
@@ -229,16 +226,16 @@
 
         hr {
             margin: 1rem 0;
-            border-color: #e2e8f0;
+            border-color: #e9ecef;
         }
 
         .footer-slide {
-            background: #eef2ff;
+            background: #eef4ea;
             padding: 1rem 2rem;
             text-align: center;
             font-size: 0.85rem;
-            color: #334155;
-            border-top: 1px solid #cbd5e6;
+            color: #2d6a4f;
+            border-top: 1px solid #d4e2d4;
         }
 
         @media (max-width: 800px) {
@@ -253,9 +250,8 @@
             }
         }
 
-        /* Copy button style */
         .copy-btn {
-            background: #334155;
+            background: #2a9d8f;
             border: none;
             color: white;
             font-size: 0.7rem;
@@ -266,13 +262,20 @@
             transition: 0.2s;
         }
         .copy-btn:hover {
-            background: #f59e0b;
-            color: #0f172a;
+            background: #f4a261;
+            color: #1e3a3a;
         }
         .code-header {
             display: flex;
             justify-content: flex-end;
             margin-bottom: -0.8rem;
+        }
+        .highlight {
+            background: #ffecb3;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -280,123 +283,124 @@
 <div class="slide-card">
     <div class="slide-header">
         <h1>
-            Python Simple Calculator 
-            <span>interactive slide</span>
+            Simple Calculator in Python 
+            <span>variables + if / elif / else</span>
         </h1>
-        <p>Take two numbers from user + choose operation (+, -, *, /) · Handle division by zero</p>
+        <p>Take two numbers from the user, choose operation (+, -, *, /) · Handle division by zero · No functions, no return</p>
     </div>
 
     <div class="two-columns">
-        <!-- LEFT COLUMN: Python code & explanation (NO EMOJIS IN CODE) -->
+        <!-- LEFT COLUMN: Python code with only variables and if/elif/else (NO def / return) -->
         <div class="col">
             <div class="code-title">
-                Python Implementation 
-                <span class="badge-python">beginner friendly</span>
+                Python Code (Beginner Friendly)
+                <span class="badge-python">no def, no return</span>
             </div>
             <div class="code-header">
                 <button class="copy-btn" id="copyCodeBtn">Copy Code</button>
             </div>
             <div class="code-block" id="pythonCodeBlock">
-                <pre style="margin:0; font-family: inherit;">def calculator():
-    print("SIMPLE CALCULATOR")
-    
-    # 1. Take two numbers from user
-    try:
-        num1 = float(input("Enter first number: "))
-        num2 = float(input("Enter second number: "))
-    except ValueError:
-        print("Invalid input! Numbers only.")
-        return
-    
-    # 2. Choose operation
-    print("\nSelect operation:")
-    print("1. Addition (+)")
-    print("2. Subtraction (-)")
-    print("3. Multiplication (*)")
-    print("4. Division (/)")
-    
-    choice = input("Enter choice (1/2/3/4): ")
-    
-    # 3. Perform calculation (handle division by zero)
-    if choice == '1':
-        result = num1 + num2
-        op_symbol = "+"
-    elif choice == '2':
-        result = num1 - num2
-        op_symbol = "-"
-    elif choice == '3':
-        result = num1 * num2
-        op_symbol = "*"
-    elif choice == '4':
-        if num2 == 0:
-            print("ERROR: Division by zero is not allowed!")
-            return
-        result = num1 / num2
-        op_symbol = "/"
-    else:
-        print("Invalid operation choice.")
-        return
-    
-    print(f"\nResult: {num1} {op_symbol} {num2} = {result}")
+                <pre style="margin:0; font-family: inherit;"># SIMPLE CALCULATOR
+# Using only variables and if-elif-else statements
 
-if __name__ == "__main__":
-    calculator()</pre>
+# Step 1: Get two numbers from the user
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+
+# Step 2: Display menu and get operation choice
+print("\\nSelect operation:")
+print("1. Addition (+)")
+print("2. Subtraction (-)")
+print("3. Multiplication (*)")
+print("4. Division (/)")
+
+choice = input("Enter choice (1/2/3/4): ")
+
+# Step 3: Perform calculation using if-elif-else
+if choice == '1':
+    result = num1 + num2
+    operation = "+"
+elif choice == '2':
+    result = num1 - num2
+    operation = "-"
+elif choice == '3':
+    result = num1 * num2
+    operation = "*"
+elif choice == '4':
+    # Check division by zero
+    if num2 == 0:
+        print("ERROR: Cannot divide by zero!")
+        result = None
+    else:
+        result = num1 / num2
+        operation = "/"
+else:
+    print("Invalid choice! Please select 1, 2, 3, or 4.")
+    result = None
+
+# Step 4: Show the result (if valid)
+if result is not None:
+    print(f"\\n{num1} {operation} {num2} = {result}")
+</pre>
             </div>
 
             <div class="explanation">
-                <p><strong>How it works (step-by-step):</strong></p>
-                <p>1. Gets two numbers from the user using input() and converts to float.<br>
-                2. Asks to pick one of four basic math operations: +, -, *, /.<br>
-                3. Uses if-elif-else to perform correct math.<br>
-                4. <span style="background:#ffecb3;">Division by zero check:</span> if second number is 0 and operation is '/', prints error and stops.<br>
-                5. Displays the final result in a formatted way.</p>
-                <p><strong>Edge cases handled:</strong> non-numeric input, division by zero, invalid operator.</p>
+                <p><strong>📚 What students learn here:</strong></p>
+                <p>✅ <span class="highlight">Variables</span> – <code>num1</code>, <code>num2</code>, <code>choice</code>, <code>result</code>, <code>operation</code><br>
+                ✅ <span class="highlight">if / elif / else</span> – to choose the right math operation<br>
+                ✅ <span class="highlight">Nested if</span> – inside division to check zero<br>
+                ✅ <span class="highlight">input() and float()</span> – get numbers from user<br>
+                ✅ <span class="highlight">Division by zero protection</span> – prevents crash</p>
+                <p><strong>No functions, no return statements</strong> – just sequential code that any beginner can follow.</p>
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: interactive LIVE calculator (same logic but JS + realtime demo) -->
+        <!-- RIGHT COLUMN: Live interactive demo (same logic) -->
         <div class="col">
             <div class="demo-title">
-                Try it LIVE: Python-style calculator
-                <span style="font-size:0.8rem;">(same rules)</span>
+                🧪 Live Demo: Try the Calculator
+                <span style="font-size:0.8rem;">(same logic as Python code)</span>
             </div>
             <div class="demo-panel">
                 <div class="input-group">
-                    <label>First Number (num1)</label>
-                    <input type="number" id="num1" placeholder="e.g., 12.5" value="8">
+                    <label>🔢 First Number (num1)</label>
+                    <input type="number" id="num1" placeholder="e.g., 15" value="15">
                 </div>
                 <div class="input-group">
-                    <label>Second Number (num2)</label>
-                    <input type="number" id="num2" placeholder="e.g., 4" value="2">
+                    <label>🔢 Second Number (num2)</label>
+                    <input type="number" id="num2" placeholder="e.g., 3" value="3">
                 </div>
                 <div class="input-group">
-                    <label>Choose Operation</label>
+                    <label>⚙️ Choose Operation</label>
                     <select id="operation">
-                        <option value="add">Addition (+) </option>
-                        <option value="sub">Subtraction (-) </option>
-                        <option value="mul">Multiplication (*) </option>
-                        <option value="div">Division (/) </option>
+                        <option value="add">1. Addition (+)</option>
+                        <option value="sub">2. Subtraction (-)</option>
+                        <option value="mul">3. Multiplication (*)</option>
+                        <option value="div">4. Division (/)</option>
                     </select>
                 </div>
                 <button class="calc-btn" id="calculateLiveBtn">Calculate Result</button>
                 <div class="result-area" id="liveResult">
-                    Click "Calculate Result"
+                    ✨ Click "Calculate Result"
                 </div>
                 <div class="warning-note" id="warningMsg">
-                    Note: Division by zero will show error, same as Python version.
+                    ⚠️ Division by zero? The program will show an error message.
                 </div>
             </div>
             <hr>
-            <div style="font-size: 0.9rem; background: #e6f7ec; border-radius: 1rem; padding: 0.8rem;">
-                <strong>Why this design?</strong> <br>
-                - Interactive: real-time simulation mimics Python's logic.<br>
-                - Demonstrates safe division (zero check).<br>
-                - Illustrates basic I/O, conditionals, error prevention.
+            <div style="font-size: 0.9rem; background: #eaf7f0; border-radius: 1rem; padding: 0.8rem; border-left: 3px solid #2a9d8f;">
+                <strong>💡 Try these examples:</strong><br>
+                • <strong>15 + 3</strong> → 18<br>
+                • <strong>10 - 4</strong> → 6<br>
+                • <strong>7 * 6</strong> → 42<br>
+                • <strong>8 / 2</strong> → 4.0<br>
+                • <strong>5 / 0</strong> → "ERROR: Cannot divide by zero!"<br>
+                • <strong>Invalid choice</strong> → error message
             </div>
         </div>
     </div>
     <div class="footer-slide">
-        Python Mini Project | Clean code | ZeroDivisionError protection | Perfect for beginners to understand calculator logic
+        🐍 Python for beginners | Only variables + if/elif/else | No def, no return | Safe division by zero check
     </div>
 </div>
 
@@ -411,21 +415,27 @@ if __name__ == "__main__":
     const copyBtn = document.getElementById('copyCodeBtn');
     const codeBlock = document.getElementById('pythonCodeBlock');
 
-    // Helper: perform calculation exactly like Python logic (no emoji)
+    // Function to simulate the exact logic of the Python code (variables + if/elif/else, no def/return)
     function performCalculation() {
+        // Get raw values (like input() in Python)
         let rawNum1 = num1Input.value.trim();
         let rawNum2 = num2Input.value.trim();
 
+        // Variable declarations (like Python variables)
         let num1, num2;
+        let result = null;
+        let operation = "";
+        let errorOccurred = false;
 
+        // Validate inputs (simulating float() conversion with error handling)
         if (rawNum1 === "") {
-            warningMsgDiv.innerText = "First number is empty. Please enter a numeric value.";
-            resultDiv.innerHTML = "Invalid input: missing first number";
+            warningMsgDiv.innerText = "Input error: First number is empty. Please enter a number.";
+            resultDiv.innerHTML = "Error: Invalid first number";
             return;
         }
         if (rawNum2 === "") {
-            warningMsgDiv.innerText = "Second number is empty. Please enter a numeric value.";
-            resultDiv.innerHTML = "Invalid input: missing second number";
+            warningMsgDiv.innerText = "Input error: Second number is empty. Please enter a number.";
+            resultDiv.innerHTML = "Error: Invalid second number";
             return;
         }
 
@@ -433,86 +443,94 @@ if __name__ == "__main__":
         num2 = parseFloat(rawNum2);
 
         if (isNaN(num1)) {
-            warningMsgDiv.innerText = "First number must be a valid number (integer or decimal).";
-            resultDiv.innerHTML = "Error: invalid first number";
+            warningMsgDiv.innerText = "Input error: First number must be a valid number.";
+            resultDiv.innerHTML = "Error: Invalid first number (not a number)";
             return;
         }
         if (isNaN(num2)) {
-            warningMsgDiv.innerText = "Second number must be a valid number.";
-            resultDiv.innerHTML = "Error: invalid second number";
+            warningMsgDiv.innerText = "Input error: Second number must be a valid number.";
+            resultDiv.innerHTML = "Error: Invalid second number (not a number)";
             return;
         }
 
-        warningMsgDiv.innerHTML = "Note: Division by zero will show error, same as Python version.";
-        
-        const operation = operationSelect.value;
-        let result;
-        let operationSymbol = "";
+        // Reset warning message
+        warningMsgDiv.innerHTML = "⚠️ Division by zero? The program will show an error message.";
 
-        switch(operation) {
-            case 'add':
-                result = num1 + num2;
-                operationSymbol = "+";
-                break;
-            case 'sub':
-                result = num1 - num2;
-                operationSymbol = "-";
-                break;
-            case 'mul':
-                result = num1 * num2;
-                operationSymbol = "*";
-                break;
-            case 'div':
-                if (num2 === 0) {
-                    resultDiv.innerHTML = `ERROR: Division by zero is not allowed! (${num1} / 0)`;
-                    warningMsgDiv.innerHTML = "ZeroDivisionError: cannot divide by zero. Python would raise an exception, but we catch it gracefully.";
-                    return;
-                }
-                result = num1 / num2;
-                operationSymbol = "/";
-                break;
-            default:
-                resultDiv.innerHTML = "Internal error: unknown operation";
+        // Get operation choice (like Python 'choice' variable)
+        const choice = operationSelect.value;
+
+        // Step 3: Perform calculation using if-elif-else (exactly matching the Python code logic)
+        if (choice === 'add') {           // corresponds to choice == '1'
+            result = num1 + num2;
+            operation = "+";
+        } 
+        else if (choice === 'sub') {      // choice == '2'
+            result = num1 - num2;
+            operation = "-";
+        } 
+        else if (choice === 'mul') {      // choice == '3'
+            result = num1 * num2;
+            operation = "*";
+        } 
+        else if (choice === 'div') {      // choice == '4'
+            // Check division by zero (nested if)
+            if (num2 === 0) {
+                // Division by zero error
+                resultDiv.innerHTML = `ERROR: Cannot divide by zero! (${num1} / 0)`;
+                warningMsgDiv.innerHTML = "Division by zero is not allowed. Python would give ZeroDivisionError, but we catch it with if.";
                 return;
+            } else {
+                result = num1 / num2;
+                operation = "/";
+            }
+        } 
+        else {
+            // Invalid choice (should not happen with select, but for completeness)
+            resultDiv.innerHTML = "Invalid choice! Please select 1, 2, 3, or 4.";
+            warningMsgDiv.innerHTML = "Use the dropdown to select a valid operation.";
+            return;
         }
 
-        let formattedResult;
-        if (Number.isInteger(result)) {
-            formattedResult = result;
-        } else {
-            formattedResult = parseFloat(result.toFixed(6));
-        }
-        
-        resultDiv.innerHTML = `Result: ${num1} ${operationSymbol} ${num2} = ${formattedResult}`;
-        if (operation === 'div' && num2 !== 0) {
-            warningMsgDiv.innerHTML = "Division performed safely. Zero check active (division by zero blocked).";
-        } else if (operation !== 'div') {
-            warningMsgDiv.innerHTML = "Operation completed. Remember: division by zero is always prevented.";
+        // Step 4: Show the result (if result is not None)
+        if (result !== null) {
+            // Format result nicely (avoid too many decimals)
+            let formattedResult;
+            if (Number.isInteger(result)) {
+                formattedResult = result;
+            } else {
+                formattedResult = parseFloat(result.toFixed(6));
+            }
+            resultDiv.innerHTML = `${num1} ${operation} ${num2} = ${formattedResult}`;
+            if (choice === 'div' && num2 !== 0) {
+                warningMsgDiv.innerHTML = "Division performed safely. Zero division check worked!";
+            } else {
+                warningMsgDiv.innerHTML = "Calculation completed using if/elif/else logic.";
+            }
         }
     }
 
-    // Copy Python code to clipboard (clean version without any emoji)
+    // Copy Python code to clipboard (clean, with no def/return)
     function copyPythonCode() {
-        // Extract the raw python code from the pre element
         const preElement = codeBlock.querySelector('pre');
         let codeText = preElement.innerText;
-        // Ensure no stray emoji or unusual characters (the code already has none, but safety)
         navigator.clipboard.writeText(codeText).then(() => {
             const originalText = copyBtn.innerText;
             copyBtn.innerText = "Copied!";
             setTimeout(() => {
                 copyBtn.innerText = originalText;
             }, 2000);
-        }).catch(err => {
-            alert("Could not copy code manually");
+        }).catch(() => {
+            alert("Could not copy. You can manually select the code.");
         });
     }
 
+    // Event listeners
     copyBtn.addEventListener('click', copyPythonCode);
     calculateBtn.addEventListener('click', performCalculation);
     
-    const inputs = [num1Input, num2Input, operationSelect];
-    inputs.forEach(input => {
+    // Allow Enter key on inputs to trigger calculation
+    const interactiveInputs = [num1Input, num2Input, operationSelect];
+    interactiveInputs.forEach(input => {
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -521,7 +539,7 @@ if __name__ == "__main__":
         });
     });
     
-    // Default calculation on page load to show something meaningful
+    // Run initial calculation on page load to show a working example
     window.addEventListener('DOMContentLoaded', () => {
         performCalculation();
     });
