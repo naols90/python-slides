@@ -1,532 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Conditionals: if / else / elif / nested | Exercises + Solutions</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Python Calculator: Interactive Slide | Build a Simple Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-      font-family: 'Segoe UI', 'Fira Code', 'Cascadia Code', monospace;
-      padding: 2rem 1.5rem;
-      min-height: 100vh;
-    }
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+            background: linear-gradient(145deg, #1a2639 0%, #2a3b4c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
 
-    /* main container */
-    .python-card {
-      max-width: 1400px;
-      margin: 0 auto;
-      background: #fefefe;
-      border-radius: 2rem;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-    }
+        /* MAIN SLIDE CARD */
+        .slide-card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 3rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
 
-    /* header with python theme */
-    .header {
-      background: #306998;
-      background: linear-gradient(135deg, #1e415e, #306998);
-      padding: 1.8rem 2rem;
-      color: white;
-      border-bottom: 5px solid #ffd43b;
-    }
+        /* header area */
+        .slide-header {
+            background: #0f172a;
+            color: white;
+            padding: 1.8rem 2.5rem;
+            border-bottom: 5px solid #f59e0b;
+        }
 
-    .header h1 {
-      font-size: 2rem;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+        .slide-header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-    .header h1 span {
-      background: #ffd43b;
-      color: #1e2a3a;
-      padding: 0.2rem 1rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
+        .slide-header h1 span {
+            background: #f59e0b;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: normal;
+        }
 
-    .header p {
-      margin-top: 0.6rem;
-      opacity: 0.9;
-      font-family: monospace;
-    }
+        .slide-header p {
+            font-size: 1.1rem;
+            color: #cbd5e6;
+            margin-top: 0.6rem;
+        }
 
-    /* tabs navigation */
-    .tabs-bar {
-      display: flex;
-      flex-wrap: wrap;
-      background: #f4f7fb;
-      border-bottom: 2px solid #cfdfed;
-      padding: 0 1.2rem;
-      gap: 0.3rem;
-    }
+        /* two column layout */
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-    .tab-btn {
-      background: transparent;
-      border: none;
-      padding: 1rem 1.8rem;
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: #1e4663;
-      border-radius: 28px 28px 0 0;
-      letter-spacing: -0.2px;
-    }
+        .col {
+            flex: 1;
+            padding: 2rem 2rem;
+            min-width: 280px;
+        }
 
-    .tab-btn:hover {
-      background: #e2edf7;
-      color: #0a2b3e;
-    }
+        .col:first-child {
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+        }
 
-    .tab-btn.active {
-      background: white;
-      color: #306998;
-      border-bottom: 3px solid #ffd43b;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
-    }
+        .col:last-child {
+            background: #ffffff;
+        }
 
-    /* panels */
-    .tab-panel {
-      display: none;
-      padding: 2rem 2rem 2rem 2rem;
-      animation: fadeIn 0.25s ease;
-    }
+        /* python code block styling - no emojis inside the code */
+        .code-block {
+            background: #0e1e2a;
+            color: #e2e8f0;
+            padding: 1.2rem;
+            border-radius: 1.5rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            box-shadow: inset 0 0 6px #00000030, 0 8px 15px rgba(0,0,0,0.1);
+            margin: 1.2rem 0;
+        }
 
-    .tab-panel.active-panel {
-      display: block;
-    }
+        .code-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
+        .badge-python {
+            background: #306998;
+            color: white;
+            border-radius: 40px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
 
-    /* two column layout (exercise + solution) */
-    .dual-column {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
+        .explanation {
+            background: #eef2ff;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+            margin: 1.2rem 0;
+            border-left: 5px solid #f59e0b;
+        }
 
-    .exercise-col, .solution-col {
-      flex: 1 1 45%;
-      background: #ffffff;
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: 0.2s;
-      border: 1px solid #e9edf2;
-    }
+        .explanation p {
+            margin: 0.5rem 0;
+            color: #1e293b;
+        }
 
-    .section-header {
-      padding: 1rem 1.5rem;
-      font-weight: 800;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 2px solid #e2e8f0;
-    }
+        /* interactive live demo panel (JS) */
+        .demo-panel {
+            background: #f1f5f9;
+            border-radius: 1.8rem;
+            padding: 1.3rem;
+            margin-top: 1rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+        }
 
-    .exercise-header {
-      background: #fff5e6;
-      color: #b45309;
-      border-left: 6px solid #f59e0b;
-    }
+        .demo-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 0.5rem;
+        }
 
-    .solution-header {
-      background: #e6f7ec;
-      color: #2b6e3c;
-      border-left: 6px solid #10b981;
-    }
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
 
-    .card-body {
-      padding: 1.5rem;
-    }
+        .input-group label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #334155;
+        }
 
-    .question-box {
-      background: #fef9e3;
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-bottom: 1.5rem;
-      border-left: 5px solid #fbbf24;
-      font-size: 0.95rem;
-      line-height: 1.45;
-    }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            background: white;
+            font-family: monospace;
+            transition: 0.2s;
+        }
 
-    pre {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1rem;
-      border-radius: 1rem;
-      overflow-x: auto;
-      font-family: 'Fira Code', 'Cascadia Code', monospace;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      margin: 1rem 0;
-    }
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
 
-    .solution-col pre {
-      background: #1e293b;
-    }
+        .calc-btn {
+            background: #0f172a;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+            margin-bottom: 1rem;
+        }
 
-    .demo-runner {
-      background: #f1f5f9;
-      border-radius: 1rem;
-      padding: 0.8rem 1rem;
-      margin-top: 1rem;
-      border: 1px solid #cbd5e1;
-    }
+        .calc-btn:hover {
+            background: #f59e0b;
+            transform: scale(0.98);
+            color: #0f172a;
+        }
 
-    .run-python-btn {
-      background: #306998;
-      border: none;
-      color: white;
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-weight: bold;
-      font-family: monospace;
-      cursor: pointer;
-      transition: 0.1s;
-      margin-top: 8px;
-    }
+        .result-area {
+            background: #0f172a;
+            color: #facc15;
+            padding: 1rem;
+            border-radius: 1.2rem;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+            word-break: break-word;
+        }
 
-    .run-python-btn:hover {
-      background: #1e4a6e;
-      transform: scale(0.97);
-    }
+        .warning-note {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+            text-align: center;
+        }
 
-    .output-area {
-      margin-top: 12px;
-      background: #0f172a;
-      color: #bbf0d0;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-family: monospace;
-      font-size: 0.85rem;
-      white-space: pre-wrap;
-    }
+        hr {
+            margin: 1rem 0;
+            border-color: #e2e8f0;
+        }
 
-    hr {
-      margin: 1rem 0;
-    }
+        .footer-slide {
+            background: #eef2ff;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #334155;
+            border-top: 1px solid #cbd5e6;
+        }
 
-    footer {
-      background: #eef2f8;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.8rem;
-      color: #1e4663;
-      border-top: 1px solid #cbd5e1;
-      font-family: monospace;
-    }
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+            .slide-header h1 {
+                font-size: 1.8rem;
+            }
+            .col {
+                padding: 1.5rem;
+            }
+        }
 
-    @media (max-width: 800px) {
-      .dual-column { flex-direction: column; }
-      .tab-btn { padding: 0.7rem 1.2rem; font-size: 0.8rem; }
-      .header h1 { font-size: 1.4rem; }
-    }
-  </style>
+        /* Copy button style */
+        .copy-btn {
+            background: #334155;
+            border: none;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: 0.2s;
+        }
+        .copy-btn:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+        .code-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: -0.8rem;
+        }
+    </style>
 </head>
 <body>
-
-<div class="python-card">
-  <div class="header">
-    <h1>
-      🐍 Python Conditionals 
-      <span>if · else · elif · nested</span>
-    </h1>
-    <p>📚 Real exercises + Python solutions | run code live & understand logic</p>
-  </div>
-
-  <div class="tabs-bar">
-    <button class="tab-btn active" data-tab="tab-if">🔹 if statement</button>
-    <button class="tab-btn" data-tab="tab-ifelse">🔸 if-else</button>
-    <button class="tab-btn" data-tab="tab-elif">🔹 if-elif-else</button>
-    <button class="tab-btn" data-tab="tab-nested">🪺 nested if</button>
-  </div>
-
-  <!-- ====================== TAB 1: SIMPLE IF ====================== -->
-  <div id="tab-if" class="tab-panel active-panel">
-    <div class="dual-column">
-      <!-- EXERCISE COLUMN -->
-      <div class="exercise-col">
-        <div class="section-header exercise-header">📌 Exercise 1 · simple if</div>
-        <div class="card-body">
-          <div class="question-box">
-            🧪 <strong>Task:</strong> Write a Python program that checks if a number is positive.<br>
-            Given <code>temperature = 5</code>, if temperature is greater than 0, print <code>"❄️ Above freezing point"</code>.<br>
-            <em>(only if block, no else)</em>
-          </div>
-          <pre># starter code
-temperature = 5
-if temperature > 0:
-    print("Above freezing point")</pre>
-          <div class="demo-runner">
-            <button class="run-python-btn" onclick="runIfDemo()">▶ Run Python (if demo)</button>
-            <div id="ifOutput" class="output-area">✨ Click to see output</div>
-          </div>
-        </div>
-      </div>
-      <!-- SOLUTION COLUMN -->
-      <div class="solution-col">
-        <div class="section-header solution-header">💡 Solution · if statement</div>
-        <div class="card-body">
-          <pre># Python solution
-temperature = 5
-if temperature > 0:
-    print("✅ Above freezing point")
-# Output: ✅ Above freezing point</pre>
-          <div class="demo-runner">
-            📖 <strong>Explanation:</strong> Condition <code>5 > 0</code> is True, so the indented block runs.<br>
-            In Python, indentation is mandatory.
-          </div>
-        </div>
-      </div>
+<div class="slide-card">
+    <div class="slide-header">
+        <h1>
+            Python Simple Calculator 
+            <span>interactive slide</span>
+        </h1>
+        <p>Take two numbers from user + choose operation (+, -, *, /) · Handle division by zero</p>
     </div>
-  </div>
 
-  <!-- ====================== TAB 2: IF-ELSE ====================== -->
-  <div id="tab-ifelse" class="tab-panel">
-    <div class="dual-column">
-      <div class="exercise-col">
-        <div class="section-header exercise-header">🔄 Exercise 2 · if-else</div>
-        <div class="card-body">
-          <div class="question-box">
-            🎫 <strong>Task:</strong> Check voting eligibility.<br>
-            Create variable <code>age = 16</code>. If age >= 18, print <code>"🗳️ Eligible to vote"</code>, otherwise print <code>"📵 Not eligible"</code>.
-          </div>
-          <pre>age = 16
-if age >= 18:
-    print("Eligible to vote")
-else:
-    print("Not eligible")</pre>
-          <div class="demo-runner">
-            <button class="run-python-btn" onclick="runIfElseDemo()">▶ Run if-else (age=16)</button>
-            <div id="ifelseOutput" class="output-area">⚡ Press to test</div>
-          </div>
-        </div>
-      </div>
-      <div class="solution-col">
-        <div class="section-header solution-header">🧩 Solution · if-else logic</div>
-        <div class="card-body">
-          <pre>age = 16
-if age >= 18:
-    print("Eligible to vote")
-else:
-    print("Not eligible")   # ✅ Output: Not eligible</pre>
-          <div class="demo-runner">
-            💡 <strong>Why?</strong> 16 is not >= 18 → else block executes.<br>
-            Try changing age to 20 and see different output.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ====================== TAB 3: IF-ELIF-ELSE ====================== -->
-  <div id="tab-elif" class="tab-panel">
-    <div class="dual-column">
-      <div class="exercise-col">
-        <div class="section-header exercise-header">📊 Exercise 3 · if-elif-else</div>
-        <div class="card-body">
-          <div class="question-box">
-            🎓 <strong>Task:</strong> Grade classifier.<br>
-            Given <code>score = 85</code>, assign grade letter:<br>
-            A (>=90), B (>=75), C (>=60), F (otherwise).<br>
-            Print the final grade.
-          </div>
-          <pre>score = 85
-if score >= 90:
-    grade = "A"
-elif score >= 75:
-    grade = "B"
-elif score >= 60:
-    grade = "C"
-else:
-    grade = "F"
-print(f"Grade: {grade}")</pre>
-          <div class="demo-runner">
-            <button class="run-python-btn" onclick="runElifDemo()">🎓 Run grade (score=85)</button>
-            <div id="elifOutput" class="output-area">📖 Click to compute</div>
-          </div>
-        </div>
-      </div>
-      <div class="solution-col">
-        <div class="section-header solution-header">🏆 Solution · elif chain</div>
-        <div class="card-body">
-          <pre>score = 85
-if score >= 90:
-    grade = "A"
-elif score >= 75:   # ✅ True (85 >= 75)
-    grade = "B"
-elif score >= 60:
-    grade = "C"
-else:
-    grade = "F"
-print(f"Grade: {grade}")   # Output: Grade: B</pre>
-          <div class="demo-runner">
-            🔎 <strong>Explanation:</strong> elif checks in order; first true block executes.<br>
-            Score 85 meets <code>score >= 75</code> → grade "B".
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ====================== TAB 4: NESTED IF ====================== -->
-  <div id="tab-nested" class="tab-panel">
-    <div class="dual-column">
-      <div class="exercise-col">
-        <div class="section-header exercise-header">🪹 Exercise 4 · nested conditions</div>
-        <div class="card-body">
-          <div class="question-box">
-            🎟️ <strong>Task:</strong> Museum discount logic.<br>
-            is_member = True, purchase_amount = 120.<br>
-            Rules: If member, then check amount: >100 → "🎁 20% super discount", else "🎁 10% discount".<br>
-            If not member → "No discount".
-          </div>
-          <pre>is_member = True
-amount = 120
-if is_member:
-    if amount > 100:
-        discount = "20% super discount"
+    <div class="two-columns">
+        <!-- LEFT COLUMN: Python code & explanation (NO EMOJIS IN CODE) -->
+        <div class="col">
+            <div class="code-title">
+                Python Implementation 
+                <span class="badge-python">beginner friendly</span>
+            </div>
+            <div class="code-header">
+                <button class="copy-btn" id="copyCodeBtn">Copy Code</button>
+            </div>
+            <div class="code-block" id="pythonCodeBlock">
+                <pre style="margin:0; font-family: inherit;">def calculator():
+    print("SIMPLE CALCULATOR")
+    
+    # 1. Take two numbers from user
+    try:
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+    except ValueError:
+        print("Invalid input! Numbers only.")
+        return
+    
+    # 2. Choose operation
+    print("\nSelect operation:")
+    print("1. Addition (+)")
+    print("2. Subtraction (-)")
+    print("3. Multiplication (*)")
+    print("4. Division (/)")
+    
+    choice = input("Enter choice (1/2/3/4): ")
+    
+    # 3. Perform calculation (handle division by zero)
+    if choice == '1':
+        result = num1 + num2
+        op_symbol = "+"
+    elif choice == '2':
+        result = num1 - num2
+        op_symbol = "-"
+    elif choice == '3':
+        result = num1 * num2
+        op_symbol = "*"
+    elif choice == '4':
+        if num2 == 0:
+            print("ERROR: Division by zero is not allowed!")
+            return
+        result = num1 / num2
+        op_symbol = "/"
     else:
-        discount = "10% discount"
-else:
-    discount = "No discount"
-print(f"Discount: {discount}")</pre>
-          <div class="demo-runner">
-            <button class="run-python-btn" onclick="runNestedDemo()">🎟️ Run nested discount</button>
-            <div id="nestedOutput" class="output-area">✨ Click to see result</div>
-          </div>
+        print("Invalid operation choice.")
+        return
+    
+    print(f"\nResult: {num1} {op_symbol} {num2} = {result}")
+
+if __name__ == "__main__":
+    calculator()</pre>
+            </div>
+
+            <div class="explanation">
+                <p><strong>How it works (step-by-step):</strong></p>
+                <p>1. Gets two numbers from the user using input() and converts to float.<br>
+                2. Asks to pick one of four basic math operations: +, -, *, /.<br>
+                3. Uses if-elif-else to perform correct math.<br>
+                4. <span style="background:#ffecb3;">Division by zero check:</span> if second number is 0 and operation is '/', prints error and stops.<br>
+                5. Displays the final result in a formatted way.</p>
+                <p><strong>Edge cases handled:</strong> non-numeric input, division by zero, invalid operator.</p>
+            </div>
         </div>
-      </div>
-      <div class="solution-col">
-        <div class="section-header solution-header">🧬 nested if solution</div>
-        <div class="card-body">
-          <pre>is_member = True
-amount = 120
-if is_member:
-    if amount > 100:
-        discount = "20% super discount"   # ✅ executes
-    else:
-        discount = "10% discount"
-else:
-    discount = "No discount"
-print(f"Discount: {discount}")   # Output: 20% super discount</pre>
-          <div class="demo-runner">
-            📘 <strong>Logic:</strong> outer if checks membership → inner if checks amount threshold.<br>
-            Nested conditions are perfect for multi-level decisions.
-          </div>
+
+        <!-- RIGHT COLUMN: interactive LIVE calculator (same logic but JS + realtime demo) -->
+        <div class="col">
+            <div class="demo-title">
+                Try it LIVE: Python-style calculator
+                <span style="font-size:0.8rem;">(same rules)</span>
+            </div>
+            <div class="demo-panel">
+                <div class="input-group">
+                    <label>First Number (num1)</label>
+                    <input type="number" id="num1" placeholder="e.g., 12.5" value="8">
+                </div>
+                <div class="input-group">
+                    <label>Second Number (num2)</label>
+                    <input type="number" id="num2" placeholder="e.g., 4" value="2">
+                </div>
+                <div class="input-group">
+                    <label>Choose Operation</label>
+                    <select id="operation">
+                        <option value="add">Addition (+) </option>
+                        <option value="sub">Subtraction (-) </option>
+                        <option value="mul">Multiplication (*) </option>
+                        <option value="div">Division (/) </option>
+                    </select>
+                </div>
+                <button class="calc-btn" id="calculateLiveBtn">Calculate Result</button>
+                <div class="result-area" id="liveResult">
+                    Click "Calculate Result"
+                </div>
+                <div class="warning-note" id="warningMsg">
+                    Note: Division by zero will show error, same as Python version.
+                </div>
+            </div>
+            <hr>
+            <div style="font-size: 0.9rem; background: #e6f7ec; border-radius: 1rem; padding: 0.8rem;">
+                <strong>Why this design?</strong> <br>
+                - Interactive: real-time simulation mimics Python's logic.<br>
+                - Demonstrates safe division (zero check).<br>
+                - Illustrates basic I/O, conditionals, error prevention.
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <footer>
-    🐍 Python 3 | Each tab includes a real exercise + solution + live Python simulator (JS emulation) <br>
-    ✅ Understand: if, if-else, elif ladder, nested if — all with practical tasks.
-  </footer>
+    <div class="footer-slide">
+        Python Mini Project | Clean code | ZeroDivisionError protection | Perfect for beginners to understand calculator logic
+    </div>
 </div>
 
 <script>
-  // ---------- interactive demo functions (simulate Python behavior) ----------
+    // DOM elements
+    const num1Input = document.getElementById('num1');
+    const num2Input = document.getElementById('num2');
+    const operationSelect = document.getElementById('operation');
+    const calculateBtn = document.getElementById('calculateLiveBtn');
+    const resultDiv = document.getElementById('liveResult');
+    const warningMsgDiv = document.getElementById('warningMsg');
+    const copyBtn = document.getElementById('copyCodeBtn');
+    const codeBlock = document.getElementById('pythonCodeBlock');
 
-  // Tab 1: simple if
-  function runIfDemo() {
-    let temperature = 5;
-    let output = "";
-    if (temperature > 0) {
-      output = "✅ Above freezing point (temperature = 5 > 0)";
-    } else {
-      output = "❄️ Not above freezing";
+    // Helper: perform calculation exactly like Python logic (no emoji)
+    function performCalculation() {
+        let rawNum1 = num1Input.value.trim();
+        let rawNum2 = num2Input.value.trim();
+
+        let num1, num2;
+
+        if (rawNum1 === "") {
+            warningMsgDiv.innerText = "First number is empty. Please enter a numeric value.";
+            resultDiv.innerHTML = "Invalid input: missing first number";
+            return;
+        }
+        if (rawNum2 === "") {
+            warningMsgDiv.innerText = "Second number is empty. Please enter a numeric value.";
+            resultDiv.innerHTML = "Invalid input: missing second number";
+            return;
+        }
+
+        num1 = parseFloat(rawNum1);
+        num2 = parseFloat(rawNum2);
+
+        if (isNaN(num1)) {
+            warningMsgDiv.innerText = "First number must be a valid number (integer or decimal).";
+            resultDiv.innerHTML = "Error: invalid first number";
+            return;
+        }
+        if (isNaN(num2)) {
+            warningMsgDiv.innerText = "Second number must be a valid number.";
+            resultDiv.innerHTML = "Error: invalid second number";
+            return;
+        }
+
+        warningMsgDiv.innerHTML = "Note: Division by zero will show error, same as Python version.";
+        
+        const operation = operationSelect.value;
+        let result;
+        let operationSymbol = "";
+
+        switch(operation) {
+            case 'add':
+                result = num1 + num2;
+                operationSymbol = "+";
+                break;
+            case 'sub':
+                result = num1 - num2;
+                operationSymbol = "-";
+                break;
+            case 'mul':
+                result = num1 * num2;
+                operationSymbol = "*";
+                break;
+            case 'div':
+                if (num2 === 0) {
+                    resultDiv.innerHTML = `ERROR: Division by zero is not allowed! (${num1} / 0)`;
+                    warningMsgDiv.innerHTML = "ZeroDivisionError: cannot divide by zero. Python would raise an exception, but we catch it gracefully.";
+                    return;
+                }
+                result = num1 / num2;
+                operationSymbol = "/";
+                break;
+            default:
+                resultDiv.innerHTML = "Internal error: unknown operation";
+                return;
+        }
+
+        let formattedResult;
+        if (Number.isInteger(result)) {
+            formattedResult = result;
+        } else {
+            formattedResult = parseFloat(result.toFixed(6));
+        }
+        
+        resultDiv.innerHTML = `Result: ${num1} ${operationSymbol} ${num2} = ${formattedResult}`;
+        if (operation === 'div' && num2 !== 0) {
+            warningMsgDiv.innerHTML = "Division performed safely. Zero check active (division by zero blocked).";
+        } else if (operation !== 'div') {
+            warningMsgDiv.innerHTML = "Operation completed. Remember: division by zero is always prevented.";
+        }
     }
-    document.getElementById("ifOutput").innerHTML = `🐍 Python output:<br>▶ ${output}`;
-  }
 
-  // Tab 2: if-else (age=16)
-  function runIfElseDemo() {
-    let age = 16;
-    let result = "";
-    if (age >= 18) {
-      result = "🗳️ Eligible to vote";
-    } else {
-      result = "📵 Not eligible";
+    // Copy Python code to clipboard (clean version without any emoji)
+    function copyPythonCode() {
+        // Extract the raw python code from the pre element
+        const preElement = codeBlock.querySelector('pre');
+        let codeText = preElement.innerText;
+        // Ensure no stray emoji or unusual characters (the code already has none, but safety)
+        navigator.clipboard.writeText(codeText).then(() => {
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => {
+                copyBtn.innerText = originalText;
+            }, 2000);
+        }).catch(err => {
+            alert("Could not copy code manually");
+        });
     }
-    document.getElementById("ifelseOutput").innerHTML = `🐍 Python output:<br>▶ ${result} (age = ${age})`;
-  }
 
-  // Tab 3: elif chain (score 85)
-  function runElifDemo() {
-    let score = 85;
-    let grade = "";
-    if (score >= 90) {
-      grade = "A";
-    } else if (score >= 75) {
-      grade = "B";
-    } else if (score >= 60) {
-      grade = "C";
-    } else {
-      grade = "F";
-    }
-    document.getElementById("elifOutput").innerHTML = `🐍 Python output:<br>▶ Grade: ${grade} (score = ${score}) → B because 85 >= 75`;
-  }
-
-  // Tab 4: nested if
-  function runNestedDemo() {
-    let isMember = true;
-    let amount = 120;
-    let discountMsg = "";
-    if (isMember) {
-      if (amount > 100) {
-        discountMsg = "🎁 20% super discount";
-      } else {
-        discountMsg = "🎁 10% discount";
-      }
-    } else {
-      discountMsg = "❌ No discount";
-    }
-    document.getElementById("nestedOutput").innerHTML = `🐍 Python output:<br>▶ Discount: ${discountMsg} (member: true, amount: $${amount})`;
-  }
-
-  // Additional optional: add live explanation to mimic real Python execution
-  // Also ensures smooth tab switching
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
-
-  function switchTab(tabId) {
-    panels.forEach(panel => {
-      panel.classList.remove('active-panel');
-    });
-    const activePanel = document.getElementById(tabId);
-    if (activePanel) activePanel.classList.add('active-panel');
+    copyBtn.addEventListener('click', copyPythonCode);
+    calculateBtn.addEventListener('click', performCalculation);
     
-    tabBtns.forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.getAttribute('data-tab') === tabId) {
-        btn.classList.add('active');
-      }
+    const inputs = [num1Input, num2Input, operationSelect];
+    inputs.forEach(input => {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performCalculation();
+            }
+        });
     });
-  }
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const tabId = btn.getAttribute('data-tab');
-      switchTab(tabId);
+    
+    // Default calculation on page load to show something meaningful
+    window.addEventListener('DOMContentLoaded', () => {
+        performCalculation();
     });
-  });
 </script>
 </body>
 </html>
